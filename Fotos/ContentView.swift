@@ -8,14 +8,46 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    // Defines my grid Columns
+    let columns = [
+       GridItem(.flexible()),
+       GridItem(.flexible()),
+    ]
+    
+    @State var fotos = [
+        FotoItem(name: "foto-1"),
+        FotoItem(name: "foto-2"),
+        FotoItem(name: "foto-3"),
+        FotoItem(name: "foto-4"),
+        FotoItem(name: "foto-5"),
+        FotoItem(name: "foto-6"),
+        FotoItem(name: "foto-7"),
+    ]
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        NavigationView{
+            ScrollView{
+                VStack{
+                    HStack{
+                        Text("My Photo Gallery")
+                            .bold()
+                            .font(.title)                            
+                        Spacer()
+                    }
+                    
+                    LazyVGrid(columns: columns){
+                        
+                        ForEach ($fotos){ foto in
+                            NavigationLink(destination: FotoView(foto: foto)){
+                                FotoCard(foto: foto)
+                            }
+                        }.padding(5)
+                    }
+                }
+               
+            }.padding()
         }
-        .padding()
     }
 }
 
@@ -24,3 +56,5 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
+
+
